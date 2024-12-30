@@ -1,16 +1,11 @@
-<app-header></app-header>
-<div class="main-container">
-  <app-sidebar></app-sidebar>
-  <div class="content">
-    <h1>YouTube Thumbnail Board</h1>
-    <div class="input-container">
-      <input
-        [(ngModel)]="videoUrl"
-        placeholder="Paste YouTube video URL here"
-      />
-      <button (click)="addThumbnail()">Add Thumbnail</button>
-    </div>
-    <div class="thumbnails-container">
+<div class="content" *ngIf="currentBoard">
+  <h1>{{ currentBoard.name }}</h1>
+  <div class="input-container">
+    <input [(ngModel)]="videoUrl" placeholder="Paste YouTube video URL here" />
+    <button (click)="addThumbnail()">Add Thumbnail</button>
+  </div>
+  <div class="thumbnails-container">
+    <ng-container *ngIf="currentBoard.thumbnails.length === 0">
       <div *ngFor="let thumbnail of thumbnails" class="thumbnail-item">
         <img
           [src]="thumbnail.url"
@@ -24,13 +19,34 @@
           <div class="video-details">
             <h3>{{ thumbnail.title }}</h3>
             <p>{{ thumbnail.channelName }}</p>
-            <p>
-              {{ thumbnail.views | number }} views • {{ thumbnail.uploadedAt }}
-            </p>
+            <p>{{ thumbnail.views }} views • {{ thumbnail.uploadedAt }}</p>
           </div>
         </div>
       </div>
+    </ng-container>
+    <div
+      *ngFor="let thumbnail of currentBoard.thumbnails"
+      class="thumbnail-item"
+    >
+      <img
+        [src]="thumbnail.url"
+        [alt]="thumbnail.title"
+        class="thumbnail-image"
+      />
+      <div class="thumbnail-info">
+        <div class="channel-avatar">
+          {{ thumbnail.channelName[0] }}
+        </div>
+        <div class="video-details">
+          <h3>{{ thumbnail.title }}</h3>
+          <p>{{ thumbnail.channelName }}</p>
+          <p>
+            {{ thumbnail.views }} views •
+            {{ thumbnail.uploadedAt | date : "M/d/yy, h:mm a" }}
+          </p>
+        </div>
+      </div>
     </div>
-    <div *ngIf="isLoading" class="loading">Loading more videos...</div>
   </div>
+  <div *ngIf="isLoading" class="loading">Loading more videos...</div>
 </div>

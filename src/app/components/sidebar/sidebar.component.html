@@ -4,4 +4,29 @@
       <a href="#">{{ category }}</a>
     </li>
   </ul>
+  <h3>Thumbnail Boards</h3>
+  <ul class="category-list">
+    <li *ngFor="let board of boardService.getBoards()">
+      <a [routerLink]="['/board', board.id]">{{ board.name }}</a>
+    </li>
+  </ul>
+  <button class="create-board" (click)="openCreateDialog()">
+    Create New Board
+  </button>
+  <h3>Subscriptions</h3>
+  <!-- <ul class="subscription-list">
+    <li *ngFor="let subscription of subscriptions">
+      <a href="#">
+        <div class="channel-avatar">{{ subscription[0] }}</div>
+        {{ subscription }}
+      </a>
+    </li>
+  </ul> -->
 </div>
+
+<app-create-board-dialog
+  *ngIf="showCreateDialog"
+  (create)="createNewBoard($event)"
+  (cancel)="closeCreateDialog()"
+>
+</app-create-board-dialog>

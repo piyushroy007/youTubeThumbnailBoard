@@ -45,8 +45,9 @@ button:hover {
 
 .thumbnails-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
   gap: 20px;
+  max-width: 100%;
 }
 
 .thumbnail-item {
@@ -55,6 +56,7 @@ button:hover {
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s, box-shadow 0.2s;
+  width: 400px;
 }
 
 .thumbnail-item:hover {
